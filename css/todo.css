@@ -1,0 +1,103 @@
+body {
+	font-family: 'Source Code Pro', sans-serif;
+	background-image:url(../img/dark_dotted2.png);
+	padding:30px;
+}
+
+<U+200C>
+
+/* dom elements being generated AFTER css has loaded */
+/* we can use jQuery to fix this */
+body ul li {
+	list-style: none;
+	display: none;
+
+}
+
+body .container {
+	width: 700px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align:center;
+	font-size: 48px;
+	font-family: 'Helvetica';
+}
+
+#todo { /* removes bullets?? */
+	list-style: none;
+}
+
+form { /* text-align to center inline elements */
+	width: 100%;
+	text-align: center;
+}
+
+label {
+	text-align: center;
+}
+
+ul {
+	text-align: center;
+
+
+}
+
+li {
+	font-size:34px;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+	border: 1px solid black;
+	margin:10px;
+	padding:20px;
+	width:0px;
+	height:0px;
+    -webkit-transition: width 2s ease, height 2s ease;  
+    -moz-transition: width 2s ease, height 2s ease;  
+    -o-transition: width 2s ease, height 2s ease;  
+    -ms-transition: width 2s ease, height 2s ease;  
+    transition: width 2s ease, height 2s ease; 
+	
+	opacity:0.5;
+	background-color:red;
+
+}
+
+.li-change {
+	width:600px;
+	height:18px;
+}
+
+.check {
+
+	height: 30;
+	width: 25px;
+	background-color: grey;
+	margin:50px;
+
+}
+
+.strikethrough {
+    text-decoration: line-through;
+	background-color:grey;
+}
+
+.editor {
+	visibility:hidden;
+	display:none;
+}
+
+.editorContainer {
+	border: 3px inset black;
+	text-align:center;
+}
+
+.paper {
+
+	background-image:url('../img/linedpaper.png');
+    -webkit-border-radius:30px;
+    border-radius:30px;
+	padding:30px;
+}
