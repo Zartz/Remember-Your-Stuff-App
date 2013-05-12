@@ -16,8 +16,8 @@ body ul li {
 
 body .container {
 	width: 700px;
-	height: 100%;
-	margin: 0 auto;
+	margin: 0 auto 10px;
+
 }
 
 h1 {
@@ -35,25 +35,33 @@ form { /* text-align to center inline elements */
 	text-align: center;
 }
 
+input[type="text"], input[type="text"]:focus{
+	width: 80%;
+	border: 1px solid black;
+	outline: none;
+	padding: 30px;
+	font-size: 2em;
+	line-height: initial;
+}
+
 label {
 	text-align: center;
 }
 
 ul {
 	text-align: center;
-
-
 }
 
 li {
 	font-size:34px;
-	border-radius:5px;
-	-webkit-border-radius:5px;
+	line-height: 1;
+	color: white;
 	border: 1px solid black;
+	-webkit-border-radius:5px;
+	border-radius:5px;
 	margin:10px;
 	padding:20px;
-	width:0px;
-	height:0px;
+	width:0;
     -webkit-transition: width 2s ease, height 2s ease;  
     -moz-transition: width 2s ease, height 2s ease;  
     -o-transition: width 2s ease, height 2s ease;  
@@ -67,16 +75,13 @@ li {
 
 .li-change {
 	width:600px;
-	height:18px;
 }
 
 .check {
-
 	height: 30;
 	width: 25px;
 	background-color: grey;
 	margin:50px;
-
 }
 
 .strikethrough {
@@ -89,15 +94,19 @@ li {
 	display:none;
 }
 
-.editorContainer {
+/*.editorContainer {
 	border: 3px inset black;
 	text-align:center;
 }
-
+*/
 .paper {
 
 	background-image:url('../img/linedpaper.png');
     -webkit-border-radius:30px;
     border-radius:30px;
 	padding:30px;
+}
+
+.selected{
+	background-color: darkcyan;
 }
