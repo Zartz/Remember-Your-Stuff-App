@@ -7,44 +7,42 @@
      	<link href="css/jquery.modal.css" type="text/css" rel="stylesheet"/>
 		<link href="css/todo.css" type="text/css" rel="stylesheet"/>
     </head>
-    <body>
-		
-
-		
-
-
-			
+    <body>			
 		</div>
 		
-		<div class="container paper pull-left">
+<!-- 		<div class="container paper pull-left">
 			
 			<h2>Anleitung</h2>
 			<p>Ctrl+a: Neues Item anlegen</p>
 			<p>Ctrl+1: Erstes Item loeschen</p>
 			<p>Alt+1: Erstes Item erledigt</p>
 			
-			<div id="enter-new" class="editorContainer editor">
+			<div id="enter-new2" class="editorContainer editor">
 				<p>Enter item:</p>
 	            <form>
-
 	                <input type="text" id="textfield"/>
 	            </form>
 			</div>
-		</div>
 		
-        <div class="container paper pull-right">
+		</div>
+ -->
+         <div class="container paper">
 			<h1>Remember your stuff</h1>
 			<br>
-
-			
+			<div id="enter-new" class="editor">
+	            <form>
+	                <!-- <input type="text" id="textfield"/> -->
+	            	<input id="textfield" class="frameless-input" type="text" name="textfield" autofocus="autofocus" placeholder="Enter item!">
+	            </form>
+			</div>
 
             <ul id="todo">
-
+				<li class="li-change">Ctrl+a/[gesture] to create new item</li>
+				<li class="li-change">Ctrl+4/5[gesture] to navigate</li>
+				<li class="li-change">Ctrl+6/move left to delete</li>
+				<li class="li-change">Ctrl+7/move right to complete</li>
             </ul>
         </div> 
-
-
-
 
         <script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="js/jquery.hotkeys.js"></script>
@@ -52,35 +50,5 @@
 		<script src="js/jquery.modal.js"></script>
         <script src="js/todo.js"></script>
 		
-		<script>
-		
-
-		
-		// Neues Item anlegen
-		$(document).bind('keydown', 'ctrl+a', function(){
-			
-			$('#enter-new').removeClass('editor');
-			$('#textfield').focus();
-		});
-		
-
-		
-		// Erstes Item löschen
-		$(document).bind('keydown', 'ctrl+1', function(){
-					$("li:first").remove();
-		});
-		
-		// Letztes Item löschen
-		$(document).bind('keydown', 'ctrl+2', function(){
-					$("li:last").remove();
-		});
-		
-		// Erstes Item erledigt
-		$(document).bind('keydown', 'alt+1', function(){
-					$("li:first").toggleClass('strikethrough');
-		});
-
-		</script>
-
     </body>
 </html>
