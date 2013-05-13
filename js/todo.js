@@ -15,35 +15,40 @@ $('form').submit(function(){
 });
 
 // Neues Item anlegen
-$(document).bind('keydown', 'ctrl+a', function(){
-
+$(document).bind('keydown', 'ctrl+a', function(event){
+  event.preventDefault(); //verhindert das default Verhalten des Browsers wie Tabwechsel
   $('#enter-new').removeClass('editor');
   $('#textfield').focus();
 });
 
 // Erstes Item löschen
-$(document).bind('keydown', 'ctrl+1', function(){
+$(document).bind('keydown', 'ctrl+1', function(event){
+	  event.preventDefault();
       $("li:first").remove();
 });
 
 // Letztes Item löschen
-$(document).bind('keydown', 'ctrl+2', function(){
+$(document).bind('keydown', 'ctrl+2', function(event){
+	  event.preventDefault();
       $("li:last").remove();
 });
 
 // Erstes Item erledigt
-$(document).bind('keydown', 'alt+1', function(){
+$(document).bind('keydown', 'alt+1', function(event){
+	  event.preventDefault();
       $("li:first").toggleClass('strikethrough');
 });
 
 // select first item
-$(document).bind('keydown', 'ctrl+3', function(){
+$(document).bind('keydown', 'ctrl+3', function(event){
+	  event.preventDefault();
       $(".selected").removeClass('selected');
       $("li:first").addClass('selected');
 });
 
 // select next item
-$(document).bind('keydown', 'ctrl+5', function(){
+$(document).bind('keydown', 'ctrl+5', function(event){
+	  event.preventDefault();
   if($(".selected").length === 0){
       $("li:first").addClass('selected');
   } else{
@@ -59,7 +64,8 @@ $(document).bind('keydown', 'ctrl+5', function(){
 });
 
 // select prev item
-$(document).bind('keydown', 'ctrl+4', function(){
+$(document).bind('keydown', 'ctrl+4', function(event){
+	  event.preventDefault();
   if($(".selected").length === 0){
       $("li:last").addClass('selected');
   } else{
@@ -73,11 +79,13 @@ $(document).bind('keydown', 'ctrl+4', function(){
 });
 
 // delete selected item
-$(document).bind('keydown', 'ctrl+6', function(){
+$(document).bind('keydown', 'ctrl+6', function(event){
+	  event.preventDefault();
       $(".selected").remove();
 });
 
 // mark selected item as done
-$(document).bind('keydown', 'ctrl+7', function(){
+$(document).bind('keydown', 'ctrl+7', function(event){
+	  event.preventDefault();
       $(".selected").toggleClass('strikethrough');
 });
