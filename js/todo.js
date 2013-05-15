@@ -89,3 +89,15 @@ $(document).bind('keydown', 'ctrl+7', function(event){
 	  event.preventDefault();
       $(".selected").toggleClass('strikethrough');
 });
+
+//move selected item up
+$(document).bind('keydown', 'ctrl+8', function(event){
+	  event.preventDefault();
+	  $(".selected").prev().insertAfter($(".selected"));
+});
+
+//move selected item down
+$(document).bind('keydown', 'ctrl+9', function(event){
+	  event.preventDefault();
+	  $(".selected").insertAfter($(".selected").next());
+});
