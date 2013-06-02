@@ -21,30 +21,30 @@ $(document).bind('keydown', 'ctrl+a', function(event){
   $('#textfield').focus();
 });
 
-// Erstes Item löschen
-$(document).bind('keydown', 'ctrl+1', function(event){
-	  event.preventDefault();
-      $("li:first").remove();
-});
+// // Erstes Item löschen
+// $(document).bind('keydown', 'ctrl+1', function(event){
+// 	  event.preventDefault();
+//       $("li:first").remove();
+// });
 
-// Letztes Item löschen
-$(document).bind('keydown', 'ctrl+2', function(event){
-	  event.preventDefault();
-      $("li:last").remove();
-});
+// // Letztes Item löschen
+// $(document).bind('keydown', 'ctrl+2', function(event){
+// 	  event.preventDefault();
+//       $("li:last").remove();
+// });
 
-// Erstes Item erledigt
-$(document).bind('keydown', 'alt+1', function(event){
-	  event.preventDefault();
-      $("li:first").toggleClass('strikethrough');
-});
+// // Erstes Item erledigt
+// $(document).bind('keydown', 'alt+1', function(event){
+// 	  event.preventDefault();
+//       $("li:first").toggleClass('strikethrough');
+// });
 
-// select first item
-$(document).bind('keydown', 'ctrl+3', function(event){
-	  event.preventDefault();
-      $(".selected").removeClass('selected');
-      $("li:first").addClass('selected');
-});
+// // select first item
+// $(document).bind('keydown', 'ctrl+3', function(event){
+// 	  event.preventDefault();
+//       $(".selected").removeClass('selected');
+//       $("li:first").addClass('selected');
+// });
 
 // select next item
 $(document).bind('keydown', 'ctrl+5', function(event){
@@ -80,8 +80,32 @@ $(document).bind('keydown', 'ctrl+4', function(event){
 
 // delete selected item
 $(document).bind('keydown', 'ctrl+6', function(event){
-	  event.preventDefault();
-      $(".selected").remove();
+    event.preventDefault();
+    undo_item = $(".selected");
+    $('li').removeAttr('data-undo-anchor');
+    $('li').removeAttr('data-undo-after');
+    if($("li:last").hasClass('selected')){
+      $(".selected").prev().attr('data-undo-anchor', 'here');
+      $(".selected").prev().attr('data-undo-after', 'true');
+    } else{
+      $(".selected").next().attr('data-undo-anchor', 'here');
+    }
+    $(".selected").remove();
+    $('ul').find("[data-undo-anchor='here']").addClass('selected');
+});
+
+//undo last deletion
+$(document).bind('keydown', 'ctrl+0', function(event){
+    event.preventDefault();
+    if(undo_item !== null){
+      $(".selected").removeClass('selected');
+      if($('ul').find("[data-undo-after='true']").length){
+        undo_item.insertAfter($('li:last'));
+      } else{
+        undo_item.insertBefore($('ul').find("[data-undo-anchor='here']"));
+      }
+      undo_item = null;
+    }
 });
 
 // mark selected item as done
@@ -101,3 +125,5 @@ $(document).bind('keydown', 'ctrl+9', function(event){
 	  event.preventDefault();
 	  $(".selected").insertAfter($(".selected").next());
 });
+
+var undo_item = null;
