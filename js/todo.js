@@ -172,3 +172,128 @@ $(document).bind('keydown', 'ctrl+9', function(event){
 //       $(".selected").removeClass('selected');
 //       $("li:first").addClass('selected');
 // });
+
+//speech API
+if (!('webkitSpeechRecognition' in window)) {
+	alert('Your Browser doesn\'t support speech recognition.\nChrome 25+ does.');
+} else {
+	var recognition = new webkitSpeechRecognition();
+	var recognizing = false;
+	var final_transcript = '';
+	var dictNewItem = false;
+	
+	var lookfor = function(stack, needle){
+		var l = needle.length, i, prevIndex = -1, tempIndex, contains = false;
+		for(i = 0; i < l; i += 1){
+			tempIndex = stack.indexOf(needle[i]); //get the position of a word
+			if(tempIndex === -1){ //if a word isn't there break;
+				break;
+			}
+			if(tempIndex > prevIndex){ //words have to be in order
+				contains = true;
+				prevIndex = tempIndex;
+			}
+		}
+		return contains;
+	};
+	
+	var first_char = /\S/;
+	var capitalize = function(s) {
+	  	return s.replace(first_char, function(m) { return m.toUpperCase(); });
+	}
+	
+  	recognition.continuous = true;
+  	recognition.interimResults = true;
+  	recognition.lang = "en";
+  	
+  	recognition.onstart = function() {
+    	recognizing = true;
+  	};
+  	
+  	recognition.onerror = function(event) {
+	    if (event.error == 'no-speech') {
+	    }
+	    if (event.error == 'audio-capture') {
+	    	alert('Well you need a microphone to speak with your computer.');
+	    }
+	    if (event.error == 'not-allowed') {
+		    /*if (event.timeStamp - start_timestamp < 100) {
+		    } else {
+		    } */
+		    alert('Please allow your computer to listen to you');
+	    }
+  	};
+  	
+  	recognition.onend = function() {
+	    recognizing = false;
+  	};
+  	
+  	recognition.onresult = function(event) {
+	    var words = [], final_transcript = '', interim_transcript = '', interim_words = '';
+	    if (typeof(event.results) == 'undefined') {
+	      	recognition.onend = null;
+	      	recognition.stop();
+	      	return;
+	    }
+	    for (var i = event.resultIndex; i < event.results.length; ++i) {
+	    	if(dictNewItem){
+	    		if (event.results[i].isFinal) { //just use strings for new items
+		        	final_transcript += event.results[i][0].transcript;
+		      	} else {
+		        	interim_transcript += event.results[i][0].transcript;
+		      	}
+	    	}
+	      	else{
+	      		if (event.results[i].isFinal) {
+	    			words = words.concat( event.results[i][0].transcript.trim().split(" ") );
+	    		}
+	    		else{
+	    			interim_words += event.results[i][0].transcript+" -- "+event.results[i][0].confidence+"\n";
+	    		}
+	      	}
+	    }
+	    if(dictNewItem){
+	    	$('#textfield').val(interim_transcript);
+	    	console.log(interim_transcript);
+	    	
+	    	if(final_transcript !== ''){ //transcript is only marked as final after pause, so we can use it as a signal of a pause...
+	    		$('#textfield').val(final_transcript);
+	    		$('form').submit();
+	    		dictNewItem = false;
+	    		console.log(final_transcript);
+	    	}
+	    }
+	    else if(words.length > 0){
+	    	if(lookfor(words, ["new", "item"]) || lookfor(words, ["create", "item"])){
+	    		remYourStuff.newItem();
+	    		dictNewItem = true;
+	    	}
+	    	else if(lookfor(words, ["next"])){
+	    		remYourStuff.selectNext();
+	    	}
+	    	else if(lookfor(words, ["previous"])){
+	    		remYourStuff.selectPrev();
+	    	}
+	    	else if(lookfor(words, ["up"])){
+	    		remYourStuff.moveUp();
+	    	}
+	    	else if(lookfor(words, ["down"])){
+	    		remYourStuff.moveDown();
+	    	}
+	    	else if(lookfor(words, ["done"])){
+	    		remYourStuff.markAsDone();
+	    	}
+	    	else if(lookfor(words, ["delete"]) || lookfor(words, ["remove"])){
+	    		remYourStuff.deleteItem();
+	    	}
+	    	else if(lookfor(words, ["undo"])){
+	    		remYourStuff.undo();
+	    	}
+	    	console.log("words: "+words);
+	    } else {
+	    	console.log(interim_words); //just show uncertain words and probability in console
+	    }
+  	};
+  	
+  	recognition.start();
+}
