@@ -1,4 +1,6 @@
 //define actions
+  var dictNewItem = false;
+
 var remYourStuff = (function($){
 	"use strict";
 	var
@@ -103,49 +105,65 @@ var remYourStuff = (function($){
 // Neues Item anlegen
 $(document).bind('keydown', 'ctrl+a', function(event){
   event.preventDefault(); //verhindert das default Verhalten des Browsers wie Tabwechsel
-  remYourStuff.newItem();
+  if(!dictNewItem){
+    remYourStuff.newItem();
+  }
 });
 
 // select next item
 $(document).bind('keydown', 'ctrl+5', function(event){
 	event.preventDefault();
-	remYourStuff.selectNext();
+  if(!dictNewItem){
+  	remYourStuff.selectNext();
+  }
 });
 
 // select prev item
 $(document).bind('keydown', 'ctrl+4', function(event){
 	event.preventDefault();
-	remYourStuff.selectPrev();  
+	if(!dictNewItem){
+    remYourStuff.selectPrev(); 
+  }
 });
 
 // delete selected item
 $(document).bind('keydown', 'ctrl+6', function(event){
     event.preventDefault();
-    remYourStuff.deleteItem();
+    if(!dictNewItem){
+      remYourStuff.deleteItem();
+    }
 });
 
 //undo last deletion
 $(document).bind('keydown', 'ctrl+0', function(event){
     event.preventDefault();
-    remYourStuff.undo();
+    if(!dictNewItem){
+      remYourStuff.undo();
+    }
 });
 
 // mark selected item as done
 $(document).bind('keydown', 'ctrl+7', function(event){
   	event.preventDefault();
-  	remYourStuff.markAsDone();
+    if(!dictNewItem){
+    	remYourStuff.markAsDone();
+    }
 });
 
 //move selected item up
 $(document).bind('keydown', 'ctrl+8', function(event){
 	event.preventDefault();
-	remYourStuff.moveUp();
+  if(!dictNewItem){
+  	remYourStuff.moveUp();
+  }
 });
 
 //move selected item down
 $(document).bind('keydown', 'ctrl+9', function(event){
 	event.preventDefault();
-	remYourStuff.moveDown();
+  if(!dictNewItem){
+  	remYourStuff.moveDown();
+  }
 });
 
 // // Erstes Item löschen
@@ -180,7 +198,6 @@ if (!('webkitSpeechRecognition' in window)) {
 	var recognition = new webkitSpeechRecognition();
 	var recognizing = false;
 	var final_transcript = '';
-	var dictNewItem = false;
 	
 	var lookfor = function(stack, needle){
 		var l = needle.length, i, prevIndex = -1, tempIndex, contains = false;
@@ -271,7 +288,7 @@ if (!('webkitSpeechRecognition' in window)) {
 	    	else if(lookfor(words, ["next"])){
 	    		remYourStuff.selectNext();
 	    	}
-	    	else if(lookfor(words, ["previous"])){
+	    	else if(lookfor(words, ["previous"]) || lookfor(words, ["former"])){
 	    		remYourStuff.selectPrev();
 	    	}
 	    	else if(lookfor(words, ["up"])){
